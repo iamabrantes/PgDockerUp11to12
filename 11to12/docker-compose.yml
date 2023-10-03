@@ -1,0 +1,15 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:11to12
+    container_name: postgres11to12
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: teste
+      POSTGRES_DB: teste
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../dados_postgres/11:/var/lib/postgresql/11
+      - ../dados_postgres/12:/var/lib/postgresql/data
