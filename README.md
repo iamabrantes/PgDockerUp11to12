@@ -1,6 +1,6 @@
 # UPGRADING POSTGRES 11.21-bullseye DATABASE TO 12.16-bullseye USING DOCKER
 
-This folder creates a postgresql image based on the 11.21-bullseye and 12.16-bullseye, to upgrade postgres database from version 11.19-3.3.2-1 to 12.14-3.3.2-2.
+This folder creates a postgresql image based on the 11.21-bullseye and 12.16-bullseye, to upgrade postgres database from version 11.21-bullseye to 12.16-bullseye.
 
 ## Build and development
 
