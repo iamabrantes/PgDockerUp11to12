@@ -1,0 +1,14 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:13.18-bullseye
+    container_name: 13.18-bullseye
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: teste
+      POSTGRES_DB: teste
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../dados_postgres/13:/var/lib/postgresql/data
