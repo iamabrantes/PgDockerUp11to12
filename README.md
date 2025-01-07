@@ -36,7 +36,9 @@ SELECT * FROM teste;
 Stop the 11.21-bullseye container which will already have the data.
 
 ```bash
-docker container stop 11.21-bullseye
+docker exec -it -u postgres 11.21-bullseye /bin/bash
+
+/usr/lib/postgresql/11/bin/pg_ctl -D /var/lib/postgresql/data stop
 ```
 
 ### To build and development the image locally:
@@ -62,6 +64,12 @@ At this point we will need to create a new database in version 12 of Postgres bu
 Enter in the container postgres11to12 and go to the /tmp path to start the procedure.
 
 ```
+docker exec -it -u root postgres11to12 /bin/bash
+
+chown postgres:postgres /var/lib/postgresql/data
+
+exit
+
 docker exec -it postgres11to12 /bin/bash
 
 cd /tmp
@@ -95,32 +103,20 @@ If you receive the message **Clusters are compatible** you can run the command w
 
 This process can take minutes to hours depending on the size of the bank you are upgrading from. Once the upgrade is successful. Give the command `postgres` to start the database.
 
-Then enter in a new terminal and enter in a PSQL session useing the command (`docker exec -it postgres11to12 psql -U postgres -d teste`) for have sure that the data was upgraded correctly.
-
-In my example, for see the data upgraded i'll use:
-
-```
-SELECT * FROM teste;
-```
-
-To quit the database:
-
-```
-\q
-```
-
 To make sure that the database has been completely updated, in the second terminal use the /tmp/analyze_new_cluster.sh script, it will do a scan to check if everything is ok.
 
-Alter that, you can stop the current container postgres11to12 and open the new container with the version 12 that we have on this repository setting correctly the folders.
+Quit the container and stop it, after stop start the postgres13 container and test the data.
 
-```
-docker container stop postgres11to12
-
+```bash
+exit
+docker-compose -f ./11to12/docker-compose.yml down
 docker-compose -f ./12.16-bullseye/docker-compose.yml up -d
 ```
 
-Check one last time the data of your data.
+Access the container and add data to the table.
 
-```
+```bash
+docker exec -it 12.16-bullseye psql -U postgres -d teste
+
 SELECT * FROM teste;
 ```
